@@ -1,0 +1,62 @@
+tables:
+
+- compte
+    - deux rôles possibles ROLE_USER ou ROLE_ADMIN
+    - peut créer un sujet
+    - peut poster une réponse sous un sujet
+    - peut signaler une réponse
+
+- sujet :
+    - titre + contenu
+    - peut être crée par user
+    - modifier par user & admin
+    - de même pour suppr, mais il doit y avoir 0 commentaire
+
+- réponse:
+    - chaque utilisateur peut poster une réponse à un sujet
+    - modifier uniquement par auteur & admin
+    - de même pour suppr
+    - peut être signalé
+
+- like:
+    - n'importe quel user peut liker ou disliker un sujet
+    - un sujet ne peut pas être liké ou disliké par son auteur
+
+
+Un auteur (user) peut avoir 0 ou plusieurs sujets
+Un sujet a un seul auteur (user)
+Un sujet peut avoir 0 ou plusieurs réponses
+Un sujet peut avoir 0 ou plusieurs likes/dislikes
+
+
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller;
+
+use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+
+class RegistrationController extends AbstractController
+{
+    public function index(UserPasswordHasherInterface $passwordHasher): Response
+    {
+
+        $user = new User();
+        $plainPassword = [];
+
+        // hash du mdp
+        $hashedPassword = $passwordHasher->hashPassword(
+            $user,
+            $plainPassword
+        );
+
+        $user->setPassword($hashedPassword);
+
+        return $this->render('registration/index.html.twig');
+    }
+}
