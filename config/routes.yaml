@@ -17,3 +17,7 @@ app_logout:
 app_admin:
     path: /admin
     controller: App\Controller\Admin\DashboardController::index
+
+#app_admin_users:
+    #path: /admin/users
+    #controller: App\Controller\Admin\UserCrudController::
