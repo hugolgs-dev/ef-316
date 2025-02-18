@@ -1,4 +1,9 @@
 <header>
     <h1 >Forum Symfony 316</h1>
+    {% if app.user %}
+    <div class="mb-3">
+        Vous êtes connecté en tant que <strong>{{ app.user.userIdentifier }}</strong>, <a href="{{ path('app_logout') }}">Logout</a>
+    </div>
+    {% endif %}
 </header>
 
